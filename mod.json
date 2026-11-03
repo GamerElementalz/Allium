@@ -1,7 +1,7 @@
 {
-	"geode": "Geode v6.0.0-alpha.1",
+	"geode": "6.0.0-alpha.1",
 	"gd": {
-		"win": "2.2081",
+		"win": "2.2091",
 		"android": "2.2081",
 		"mac": "2.2081",
 		"ios": "2.2081"
