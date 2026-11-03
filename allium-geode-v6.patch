@@ -1,0 +1,81 @@
+diff --git a/Dockerfile b/Dockerfile
+index b6cd9cc..68312d3 100644
+--- a/Dockerfile
++++ b/Dockerfile
+@@ -3,7 +3,7 @@
+ ARG MOD_ID
+ ARG CPM_CACHE_DIR=/workspace/cpm-cache
+ ARG BINDINGS=geode-sdk/bindings
+-ARG SDK_VERSION=stable
++ARG SDK_VERSION=v6.0.0-alpha.1
+ 
+ # Android 32
+ FROM prevter/geode-sdk:android-latest AS android32
+diff --git a/include/Allium/util/TextBrushDrawer.hpp b/include/Allium/util/TextBrushDrawer.hpp
+index 5d737c9..62eb127 100644
+--- a/include/Allium/util/TextBrushDrawer.hpp
++++ b/include/Allium/util/TextBrushDrawer.hpp
+@@ -28,7 +28,7 @@ namespace allium {
+         bool m_updatedOrigin = false;
+         Point m_origin;
+ 
+-        std::filesystem::path m_fontPath;
++        asp::fs::Path m_fontPath;
+         std::unique_ptr<TTFFontParser::FontData> m_fontData;
+ 
+         void relocateCursor(cocos2d::CCPoint const& point, bool updateIME);
+diff --git a/mod.json b/mod.json
+index 55eda4b..44add15 100644
+--- a/mod.json
++++ b/mod.json
+@@ -1,10 +1,10 @@
+ {
+-	"geode": "5.2.0",
++	"geode": "6.0.0-alpha.1",
+ 	"gd": {
+-		"win": "2.2081",
+-		"android": "2.2081",
+-		"mac": "2.2081",
+-		"ios": "2.2081"
++		"win": "2.2091",
++		"android": "2.2091",
++		"mac": "2.2091",
++		"ios": "2.2091"
+ 	},
+ 	"version": "1.0.11",
+ 	"id": "alk.allium",
+diff --git a/src/ui/SupportPopup.cpp b/src/ui/SupportPopup.cpp
+index 3f11ad8..dc6a6c8 100644
+--- a/src/ui/SupportPopup.cpp
++++ b/src/ui/SupportPopup.cpp
+@@ -29,7 +29,7 @@ bool SupportPopup::init() {
+ 
+     this->setKeypadEnabled(true);
+ 
+-    cocos2d::CCTouchDispatcher::get()->registerForcePrio(this, 2);
++    cocos2d::CCTouchDispatcher::get()->registerForcePrio(this, 2, 0);
+ 
+     m_mainLayer = CCLayer::create();
+     this->addChildAtPosition(m_mainLayer, Anchor::Center, ccp(0, 0));
+diff --git a/src/util/TextBrushDrawer.cpp b/src/util/TextBrushDrawer.cpp
+index 6ca192f..2feaaed 100644
+--- a/src/util/TextBrushDrawer.cpp
++++ b/src/util/TextBrushDrawer.cpp
+@@ -38,7 +38,7 @@ bool TextBrushDrawer::init() {
+ }
+ 
+ void TextBrushDrawer::initFontData() {
+-    m_fontPath = Mod::get()->getSettingValue<std::filesystem::path>("font-path");
++    m_fontPath = Mod::get()->getSettingValue<asp::fs::Path>("font-path");
+     if (m_fontPath.empty()) {
+         m_fontPath = Mod::get()->getResourcesDir() / "Nunito-Regular.ttf";
+     }
+@@ -116,7 +116,7 @@ void TextBrushDrawer::handleTouchEnd(cocos2d::CCPoint const& point) {
+         m_endPos = m_origin;
+         m_updatedOrigin = true;
+ 
+-        if (m_fontPath != Mod::get()->getSettingValue<std::filesystem::path>("font-path")) {
++        if (m_fontPath != Mod::get()->getSettingValue<asp::fs::Path>("font-path")) {
+             this->initFontData();
+         }
+     }
