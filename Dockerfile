@@ -3,7 +3,7 @@
 ARG MOD_ID
 ARG CPM_CACHE_DIR=/workspace/cpm-cache
 ARG BINDINGS=geode-sdk/bindings
-ARG SDK_VERSION=stable
+ARG SDK_VERSION=v6.0.0-alpha.1
 
 # Android 32
 FROM prevter/geode-sdk:android-latest AS android32
